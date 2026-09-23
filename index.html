@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareFinder - Find the Right Hospital</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f8fb;
+            color: #1f2937;
+        }
+
+        header {
+            background: #0b7fab;
+            color: white;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 70px 20px;
+            background: linear-gradient(135deg, #dff6ff, #ffffff);
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            color: #075985;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .search-box {
+            max-width: 700px;
+            margin: auto;
+            display: flex;
+            background: white;
+            padding: 8px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .search-box button {
+            background: #0b7fab;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .section {
+            padding: 50px 8%;
+        }
+
+        .section h2 {
+            text-align: center;
+            color: #075985;
+            margin-bottom: 30px;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .filters select {
+            padding: 12px 18px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .hospital-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .hospital-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
+
+        .hospital-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .hospital-card h3 {
+            color: #075985;
+            margin-bottom: 12px;
+        }
+
+        .hospital-card p {
+            margin: 8px 0;
+            color: #555;
+        }
+
+        .view-btn {
+            margin-top: 15px;
+            padding: 10px 18px;
+            background: #0b7fab;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .about {
+            background: #e8f7fc;
+            text-align: center;
+        }
+
+        .about p {
+            max-width: 750px;
+            margin: auto;
+            line-height: 1.7;
+            color: #555;
+        }
+
+        footer {
+            background: #075985;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media(max-width:600px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            header {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">🏥 CareFinder</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#hospitals">Hospitals</a>
+        <a href="#about">About</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+
+    <h1>Find the Right Hospital for Your Health Needs</h1>
+
+    <p>
+        Discover hospitals based on disease, specialty, location and available services.
+    </p>
+
+    <div class="search-box">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search disease or hospital..."
+        >
+
+        <button onclick="searchHospitals()">
+            Search
+        </button>
+    </div>
+
+</section>
+
+<section class="section" id="hospitals">
+
+    <h2>Find Hospitals</h2>
+
+    <div class="filters">
+
+        <select id="diseaseFilter">
+            <option value="all">All Diseases</option>
+            <option value="cardiology">Heart Disease</option>
+            <option value="cancer">Cancer</option>
+            <option value="diabetes">Diabetes</option>
+            <option value="orthopedic">Orthopedic</option>
+        </select>
+
+        <select id="locationFilter">
+            <option value="all">All Locations</option>
+            <option value="jalandhar">Jalandhar</option>
+            <option value="ludhiana">Ludhiana</option>
+            <option value="amritsar">Amritsar</option>
+        </select>
+
+        <button class="view-btn" onclick="filterHospitals()">
+            Apply Filters
+        </button>
+
+    </div>
+
+    <div class="hospital-container" id="hospitalContainer">
+
+        <div class="hospital-card"
+             data-disease="cardiology"
+             data-location="jalandhar">
+
+            <h3>City Heart Hospital</h3>
+
+            <p>❤️ Specialty: Cardiology</p>
+            <p>📍 Location: Jalandhar</p>
+            <p>⭐ Rating: 4.5/5</p>
+
+            <button class="view-btn">View Details</button>
+
+        </div>
+
+
+        <div class="hospital-card"
+             data-disease="cancer"
+             data-location="ludhiana">
+
+            <h3>Hope Cancer Centre</h3>
+
+            <p>🎗️ Specialty: Oncology</p>
+            <p>📍 Location: Ludhiana</p>
+            <p>⭐ Rating: 4.6/5</p>
+
+            <button class="view-btn">View Details</button>
+
+        </div>
+
+
+        <div class="hospital-card"
+             data-disease="diabetes"
+             data-location="amritsar">
+
+            <h3>LifeCare Hospital</h3>
+
+            <p>🩺 Specialty: Diabetes Care</p>
+            <p>📍 Location: Amritsar</p>
+            <p>⭐ Rating: 4.4/5</p>
+
+            <button class="view-btn">View Details</button>
+
+        </div>
+
+
+        <div class="hospital-card"
+             data-disease="orthopedic"
+             data-location="ludhiana">
+
+            <h3>Bone & Joint Hospital</h3>
+
+            <p>🦴 Specialty: Orthopedics</p>
+            <p>📍 Location: Ludhiana</p>
+            <p>⭐ Rating: 4.7/5</p>
+
+            <button class="view-btn">View Details</button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section about" id="about">
+
+    <h2>About CareFinder</h2>
+
+    <p>
+        CareFinder is a healthcare discovery platform designed to help
+        people find suitable hospitals for specific health conditions.
+        It brings hospital information together in one place so users
+        can easily discover and compare available options.
+    </p>
+
+</section>
+
+
+<footer>
+    <p>© 2026 CareFinder | Healthcare Discovery Platform</p>
+</footer>
+
+
+<script>
+
+function searchHospitals() {
+
+    let search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    let hospitals =
+        document.querySelectorAll(".hospital-card");
+
+    hospitals.forEach(function(hospital) {
+
+        let text =
+            hospital.innerText.toLowerCase();
+
+        if (text.includes(search)) {
+            hospital.style.display = "block";
+        } else {
+            hospital.style.display = "none";
+        }
+
+    });
+}
+
+
+function filterHospitals() {
+
+    let disease =
+        document.getElementById("diseaseFilter").value;
+
+    let location =
+        document.getElementById("locationFilter").value;
+
+    let hospitals =
+        document.querySelectorAll(".hospital-card");
+
+    hospitals.forEach(function(hospital) {
+
+        let hospitalDisease =
+            hospital.getAttribute("data-disease");
+
+        let hospitalLocation =
+            hospital.getAttribute("data-location");
+
+        let diseaseMatch =
+            disease === "all" ||
+            disease === hospitalDisease;
+
+        let locationMatch =
+            location === "all" ||
+            location === hospitalLocation;
+
+        if (diseaseMatch && locationMatch) {
+            hospital.style.display = "block";
+        } else {
+            hospital.style.display = "none";
+        }
+
+    });
+}
+
+</script>
+
+</body>
+</html>
